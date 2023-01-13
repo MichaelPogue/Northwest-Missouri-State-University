@@ -2,26 +2,71 @@ import os
 import csv
 import pandas as pd
 
+
+
 BASE_FILE = 'batchfile_0_farenheit.csv'
 input_file_name = 'batchfile_2_kelvin.csv'
 output_file_name = 'batchfile_3_farenheit.csv'
 
-class processTemperatures:
-    def __init__(self, BASE_FILE):
-        self.BASE_FILE = BASE_FILE
+input_file_name = "batchfile_0_farenheit.csv"
+output_file_name = "batchfile_1_celcius.csv"
+input_file = open(input_file_name, "r")
+output_file = open(output_file_name, "w", newline='')
 
-    def convert_base_to_kelvin(self):
-        isExist = os.path.exists('batchfile_2_kelvin.csv')
-        if isExist is True:
-            df.to_csv('batchfile_2_kelvin.csv')
-        elif isExist is False:
-            df = pd.DataFrame(list())
-            df.to_csv('batchfile_2_kelvin.csv')
+reader = csv.reader(input_file, delimiter=",")
+writer = csv.writer(output_file, delimiter=",")
 
+header = next(reader)
 
-    def conver_far_to_kelvin(self):
-        pass
+header_list = ["Year","Month","Day","Time","TempC"]
+writer.writerow(header_list)
 
+for row in reader:
+    Year, Month, Day, Time, TempA = row
+    TempB = round((float(TempA) - 32.0) * 5.0 / 9.0,2)
+    writer.writerow([Year, Month, Day, Time, TempB])
 
-pt = processTemperatures
-pt.convert_base_to_kelvin(BASE_FILE)
+output_file.close()
+input_file.close()
+
+input_file_name = "batchfile_1_celcius.csv"
+output_file_name = "batchfile_2_kelvin.csv"
+input_file = open(input_file_name, "r")
+output_file = open(output_file_name, "w", newline='')
+
+reader = csv.reader(input_file, delimiter=",")
+writer = csv.writer(output_file, delimiter=",")
+
+header = next(reader)
+
+header_list = ["Year","Month","Day","Time","TempK"]
+writer.writerow(header_list)
+
+for row in reader:
+    Year, Month, Day, Time, TempA = row
+    TempB = round((float(TempA) +273.15),2)
+    writer.writerow([Year, Month, Day, Time, TempB])
+
+output_file.close()
+input_file.close()
+
+input_file_name = "batchfile_2_kelvin.csv"
+output_file_name = "batchfile_3_farenheit.csv"
+input_file = open(input_file_name, "r")
+output_file = open(output_file_name, "w", newline='')
+
+reader = csv.reader(input_file, delimiter=",")
+writer = csv.writer(output_file, delimiter=",")
+
+header = next(reader)
+
+header_list = ["Year","Month","Day","Time","TempF"]
+writer.writerow(header_list)
+
+for row in reader:
+    Year, Month, Day, Time, TempA = row
+    TempB = round(((float(TempA)* 9/5) - 459.67),2)  
+    writer.writerow([Year, Month, Day, Time, TempB])
+
+output_file.close()
+input_file.close()

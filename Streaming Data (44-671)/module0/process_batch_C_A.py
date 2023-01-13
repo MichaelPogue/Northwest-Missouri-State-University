@@ -13,7 +13,7 @@ class processTemperatures:
     def convert_base_to_kelvin(self):
         isExist = os.path.exists('batchfile_2_kelvin.csv')
         if isExist is True:
-            pass
+            df.to_csv('batchfile_2_kelvin.csv')
         elif isExist is False:
             df = pd.DataFrame(list())
             df.to_csv('batchfile_2_kelvin.csv')

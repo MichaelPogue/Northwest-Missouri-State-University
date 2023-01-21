@@ -1,0 +1,11 @@
+Month,Title,Platform(s),Genre(s),Developer(s),Publisher(s)
+JANUARY,3,Freddi Fish 3: The Case of the Stolen Conch Shell,NS,Adventure,Humongous Entertainment,UFO Interactive Games
+JANUARY,3,Putt-Putt Travels Through Time,NS,Adventure,Humongous Entertainment,UFO Interactive Games
+JANUARY,4,Deep Rock Galactic,"PS4, PS5",First-person shooter,Ghost Ship Games,Coffee Stain Publishing
+JANUARY,4,The Pedestrian,"XBO, XSX","Puzzle, platform",Skookum Arts LLC,Skookum Arts LLC
+JANUARY,6,Demon Gaze Extra,"NS, PS4",Role-playing,Cattle Call,Clouded Leopard Entertainment
+JANUARY,6,QuickSpot,NS,Puzzle,Bandai Namco Online,Bandai Namco Entertainment
+JANUARY,10,Japanese Rail Sim: Journey to Kyoto,NS,Train simulator,Sonic Powered,Sonic Powered
+JANUARY,10,Picross S7,NS,Puzzle,Jupiter,Jupiter
+JANUARY,12,Monster Hunter Rise,Win,Action role-playing,Capcom,Capcom
+JANUARY,12,SNK vs. Capcom: Card Fighters Clash,NS,Digital collectible card game,SNK,SNK

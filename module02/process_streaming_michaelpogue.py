@@ -41,7 +41,7 @@ for row in reader:
     sock.sendto(MESSAGE, ADDRESS_TUPLE)
     print (f"Sent: {MESSAGE} on port {PORT}.")
     writer.writerow([Month, Day, Title, Platform, Genre, Developer, Publisher])
-    time.sleep(1)
+    time.sleep(3)
 
 output_file.close()
 input_file.close()

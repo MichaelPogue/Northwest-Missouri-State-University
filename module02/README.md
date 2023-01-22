@@ -103,7 +103,7 @@ When you get an error, read them carefully.
 
 Do a web search on the sqlite3 'database is locked' error.
 
-- What do you learn?
+- What do you learn? SQLite is not meant for operations such as these, as it is lightweight. This is the cause of crashing.
 - Once a process fails, it crashes the main process and everything stops. 
 
 ## Deadlock

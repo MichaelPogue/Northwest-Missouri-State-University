@@ -51,6 +51,16 @@ one process will have the database open and be working on it -
 then when another process tries to do the same, it can't and 
 we end up with an error. 
 
+Concurrent Multiprocessing
+
+Task 1. Explore the output from concurrent processes. Were activities performed in a in order? Does the order vary on multiple runs? What would happen if a process - or machine - dies? Is information lost? These considerations are important when deciding how to implement distributed analytics solutions. 
+
+At 0, all tasks run in order. At task 1, with the extra second wait we see the order begin to fail to execute correctly.  P1 is loaded instantly, but due to the delay P2 and P3 are clashing, which eventually clashes with P1 as its ending the second bit. Essentially, the p1.start() is clashing with the p1.join() more and more with longer delays. At only a 1 second delay, the program still runs. At 2 and 3 the program crashes sooner with the higher delay. If the process is obstructed, I believe the loss of information would depend on what type of backups are being used. I would assume no data is lost as in this case, it's the query that is suffering, not the data itself. 
+
+Task 2. Increase the time and see how things go? What happens? 
+
+As stated above, increasing time decreases the time before the next crash.
+
 ## Document Results After Each Run
 
 To clear the terminal, in the terminal window, type clear and hit enter or return. 

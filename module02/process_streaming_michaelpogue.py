@@ -1,6 +1,9 @@
 #####################################
 # Module 02 - Code by Michael Pogue
 #####################################
+
+#TODO: with open() as f
+
 import csv
 import socket
 import time

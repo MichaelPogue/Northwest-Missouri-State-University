@@ -23,32 +23,48 @@ import csv
 import socket
 import time
 
-HOST = "localhost"
-PORT = 9999
-ADDRESS_TUPLE = (HOST, PORT)
+host = "localhost"
+port = 9999
+address_tuple = (host, port)
 
-class infinity(HOST, PORT, ADDRESS_TUPLE):
-    def __init__(self):
-        self.HOST = HOST
-        self.PORT = PORT
-        self.ADDRESS_TUPLE = ADDRESS_TUPLE
+# use an enumerated type to set the address family to (IPV4) for internet
+socket_family = socket.AF_INET 
 
-    def test(self):
-        socket_family = socket.AF_INET 
-        socket_type = socket.SOCK_DGRAM 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        input_file = open("batchfile_0_farenheit.csv", "r")
-        reversed = sorted(input_file)
-        reader = csv.reader(reversed, delimiter=",")
-        for row in reader:
-            Year, Month, Day, Time, TempF = row
-            fstring_message = f"[{Year}, {Month}, {Day}, {Time}, {TempF}]"
-            MESSAGE = fstring_message.encode()
-            sock.sendto(MESSAGE, ADDRESS_TUPLE)
-            print (f"Sent: {MESSAGE} on port {PORT}.")
-            time.sleep(3)
+# use an enumerated type to set the socket type to UDP (datagram)
+socket_type = socket.SOCK_DGRAM 
 
-inf = infinity
-inf.test()
+# use the socket constructor to create a socket object we'll call sock
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
 
+# read from a file to get some fake data
+input_file = open("batchfile_0_farenheit.csv", "r")
+output_file_name = "batchfile_0_farenheit.txt"
+output_file = open(output_file_name, "w", newline='')
+# use the built0in sorted() function to get them in chronological order
+reversed = sorted(input_file)
 
+# create a csv reader for our comma delimited data
+reader = csv.reader(reversed, delimiter=",")
+writer = csv.writer(output_file, delimiter=",")
+header = next(reader)
+header_list = ["Year","Month","Day","Time","TempC"]
+writer.writerow(header_list)
+
+for row in reader:
+    # read a row from the file
+    Year, Month, Day, Time, TempF = row
+
+    # use an fstring to create a message from our data
+    # notice the f before the opening quote for our string?
+    fstring_message = f"[{Year}, {Month}, {Day}, {Time}, {TempF}]"
+    
+    # prepare a binary (1s and 0s) message to stream
+    MESSAGE = fstring_message.encode()
+
+    # use the socket sendto() method to send the message
+    sock.sendto(MESSAGE, address_tuple)
+    print (f"Sent: {MESSAGE} on port {port}.")
+    writer.writerow([Year, Month, Day, Time, TempF])
+
+    # sleep for a few seconds
+    time.sleep(3)

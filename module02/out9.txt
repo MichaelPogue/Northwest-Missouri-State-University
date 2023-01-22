@@ -14,10 +14,3 @@ JANUARY,13,Boomerang Fu,"PS4, PS5","Fighting, party",Cranky Watermelon,Cranky Wa
 JANUARY,13,Deemo II,"iOS, Droid",Rhythm,Rayark,Rayark
 JANUARY,13,Eschatos,NS,Scrolling shooter,Qute Corporation,Qute Corporation
 JANUARY,13,Mary Skelter 2,Win,"Role-playing, dungeon crawler",Compile Heart,Ghostlight
-JANUARY,13,Nova-111,NS,Adventure,Funktronic Labs,No Gravity Games
-JANUARY,13,Shadow Man Remastered,"PS4, XBO",Action-adventure,"Nightdive Studios, Acclaim Entertainment",Nightdive Studios
-JANUARY,13,Spelunky 2,"XBO, XSX","Platform, roguelike","Mossmouth, BlitWorks",Mossmouth
-JANUARY,14,God of War,Win,Action-adventure,"Jetpack Interactive, Santa Monica Studio",PlayStation PC
-JANUARY,17,Shadow Man Remastered,NS,Action-adventure,"Nightdive Studios, Acclaim Entertainment",Nightdive Studios
-JANUARY,18,Nobody Saves the World,"Win, XBO, XSX",Action role-playing,Drinkbox Studios,Drinkbox Studios
-JANUARY,18,River City Girls,PS5,Beat 'em up,WayForward,Arc System Works

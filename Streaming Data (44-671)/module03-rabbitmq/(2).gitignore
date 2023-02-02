@@ -1,8 +1,0 @@
-# Client/personal data
-.env
-
-# File Types
-*.json
-
-# Jupyter Notebooks
-.ipynb_checkpoints

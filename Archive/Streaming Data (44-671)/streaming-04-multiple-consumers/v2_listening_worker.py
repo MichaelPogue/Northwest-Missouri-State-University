@@ -1,67 +1,39 @@
-""" Authored By: Michael Pogue | Created on: 21Feb23 | Last Updated: 21Feb23 
-
-This code will monitor incoming traffic from RabbitMQ and monitor it for 
-problematic temperature fluctuations.
 """
-# Import modules used.
+    This program listens for work messages contiously. 
+    Start multiple versions to add more workers.  
+
+    Author: Denise Case
+    Date: January 15, 2023
+
+"""
+
 import pika
 import sys
 import time
-import os
-from collections import deque
-from time import strftime 
-
-# Set variables to be used.
-EMAIL = os.getenv("EMAIL_ADDRESS")
-host = 'localhost'
-data_queue = "03-food-B"
-data_deque = deque(maxlen = 20)
-data_warning = 1
 
 # define a callback function to be called when a message is received
-def decode_message(ch, method, properties, body):
-    """ 
-    Function to decode individual lines of data and monitor for temperature fluctuations.
-    ---------------------------------------------------------------------------
-    """
+def callback(ch, method, properties, body):
+    """ Define behavior on getting a message."""
     # decode the binary message body to a string
-    print(f" [x] Received {body.decode()}") 
+    print(f" [x] Received {body.decode()}")
+    # simulate work by sleeping for the number of dots in the message
+    time.sleep(body.count(b"."))
+    # when done with task, tell the user
+    print(" [x] Done.")
+    # acknowledge the message was received and processed 
+    # (now it can be deleted from the queue)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
-    # Set initial queue data used to create deque.
-    data_deque.append(body.decode())
-    initial_data = data_deque[0]
-    initial_split = initial_data.split(",")
-    initial_temp = float(initial_split[1][:-1])
-    # initial_temp = str(re.findall(r"[-+]?\d*\.\d+", deque_1_initial)) <- A monument to failure.
-
-    # Add continuous data to array.
-    present_data = body.decode()
-    present_split = present_data.split(",")
-    present_temp = float(present_split[1][:-1])
-    # present_temp = str(re.findall(r"[-+]?\d*\.\d+", deque_1_present)) <- A monument to failure.
-
-    # Calculate temperature difference from the initial input with the latest.
-    temperature_difference = abs(float(initial_temp) - float(present_temp))
-
-    # Calculate if the temperature is within parameters, then send a warning message.
-    if temperature_difference <= data_warning:
-        degree = "\u00b0"+"F"
-        print(f"ERROR: Temperature stalled with only a {round(temperature_difference, 1)}{degree} change in 10 minutes.")
-
-    ch.basic_ack(delivery_tag = method.delivery_tag)
-    time.sleep(.1)
 
 # define a main function to run the program
-def main(hn: str, qn: str):
-    """ 
-    Continuously listen for task messages on a named queue.
-    ---------------------------------------------------------------------------
-    """
+def main(hn: str = "localhost", qn: str = "task_queue"):
+    """ Continuously listen for task messages on a named queue."""
+
     # when a statement can go wrong, use a try-except block
     try:
         # try this code, if it works, keep going
         # create a blocking connection to the RabbitMQ server
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host = hn))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=hn))
 
     # except, if there's an error, do this
     except Exception as e:
@@ -80,7 +52,7 @@ def main(hn: str, qn: str):
         # a durable queue will survive a RabbitMQ server restart
         # and help ensure messages are processed in order
         # messages will not be deleted until the consumer acknowledges
-        channel.queue_declare(queue = qn, durable = True)
+        channel.queue_declare(queue=qn, durable=True)
 
         # The QoS level controls the # of messages
         # that can be in-flight (unacknowledged by the consumer)
@@ -95,7 +67,7 @@ def main(hn: str, qn: str):
         # configure the channel to listen on a specific queue,  
         # use the callback function named callback,
         # and do not auto-acknowledge the message (let the callback handle it)
-        channel.basic_consume( queue = qn, on_message_callback = decode_message)
+        channel.basic_consume( queue=qn, on_message_callback=callback)
 
         # print a message to the console for the user
         print(" [*] Ready for work. To exit press CTRL+C")
@@ -117,13 +89,11 @@ def main(hn: str, qn: str):
         print("\nClosing connection. Goodbye.\n")
         connection.close()
 
-"""  
 
------------------------------------------------------------------------------------------- """
 # Standard Python idiom to indicate main program entry point
 # This allows us to import this module and use its functions
 # without executing the code below.
 # If this is the program being run, then execute the code below
 if __name__ == "__main__":
     # call the main function with the information needed
-    main(host, data_queue)
+    main("localhost", "task_queue2")
